@@ -1,0 +1,13 @@
+syntax = "proto3";
+package chat.chat;
+
+option go_package = "chat/x/chat/types";
+
+message ChatPacketData {
+    oneof packet {
+        NoData noData = 1;
+    }
+}
+
+message NoData {
+}

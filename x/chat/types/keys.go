@@ -12,6 +12,17 @@ const (
 
 	// MemStoreKey defines the in-memory store key
 	MemStoreKey = "mem_chat"
+
+	// Version defines the current version the IBC module supports
+	Version = "chat-1"
+
+	// PortID is the default port id that module binds to
+	PortID = "chat"
+)
+
+var (
+	// PortKey defines the key to store the port ID in store
+	PortKey = KeyPrefix("chat-port-")
 )
 
 func KeyPrefix(p string) []byte {
