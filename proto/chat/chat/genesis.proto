@@ -1,0 +1,12 @@
+syntax = "proto3";
+package chat.chat;
+
+import "gogoproto/gogo.proto";
+import "chat/chat/params.proto";
+
+option go_package = "chat/x/chat/types";
+
+// GenesisState defines the chat module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+}
