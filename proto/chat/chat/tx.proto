@@ -1,7 +1,38 @@
 syntax = "proto3";
+
 package chat.chat;
+
+import "chat/chat/message.proto";
 
 option go_package = "chat/x/chat/types";
 
 // Msg defines the Msg service.
-service Msg {}
+service Msg {
+  rpc CreateMessage (MsgCreateMessage) returns (MsgCreateMessageResponse);
+  rpc UpdateMessage (MsgUpdateMessage) returns (MsgUpdateMessageResponse);
+  rpc DeleteMessage (MsgDeleteMessage) returns (MsgDeleteMessageResponse);
+}
+message MsgCreateMessage {
+  string creator = 1;
+  string body    = 2;
+}
+
+message MsgCreateMessageResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateMessage {
+  string creator = 1;
+  uint64 id      = 2;
+  string body    = 3;
+}
+
+message MsgUpdateMessageResponse {}
+
+message MsgDeleteMessage {
+  string creator = 1;
+  uint64 id      = 2;
+}
+
+message MsgDeleteMessageResponse {}
+

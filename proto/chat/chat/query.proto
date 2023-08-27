@@ -1,26 +1,58 @@
 syntax = "proto3";
+
 package chat.chat;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "chat/chat/params.proto";
+import "chat/chat/message.proto";
 
 option go_package = "chat/x/chat/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/chat/chat/params";
+  
+  }
+  
+  // Queries a list of Message items.
+  rpc Message    (QueryGetMessageRequest) returns (QueryGetMessageResponse) {
+    option (google.api.http).get = "/chat/chat/message/{id}";
+  
+  }
+  rpc MessageAll (QueryAllMessageRequest) returns (QueryAllMessageResponse) {
+    option (google.api.http).get = "/chat/chat/message";
+  
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {
+  
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
 }
+
+message QueryGetMessageRequest {
+  uint64 id = 1;
+}
+
+message QueryGetMessageResponse {
+  Message Message = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllMessageRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllMessageResponse {
+  repeated Message                                Message    = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
